@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { Provider as ReduxProvider } from 'react-redux';
+import { Router, Route } from 'react-router';
+import { BrowserRouter } from 'react-router-dom';
+
+import configureStore from './store';
+
 import './App.css';
+
+import Container1 from './containers/Container1';
+import Container2 from './containers/Container2';
+import Main from './containers/Main';
+
+const reduxStore = configureStore();
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <ReduxProvider store={reduxStore}>
+        <BrowserRouter>
+          <div>
+            <Route path='/login' component={() => <div>LOGIN!</div>} />
+            <Route path='/' component={Main} />
+            <Route exact path='/container1' component={Container1} />
+            <Route exact path='/container2' component={Container2} />
+          </div>
+        </BrowserRouter>
+      </ReduxProvider>
     );
   }
 }
